@@ -38,7 +38,43 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    const WORD_LENGTH = 10;
+  const MORSE_LENGTH = 2;
+  const MORSE = {
+    '10':  '.',
+    '11':  '-',
+    '**':  ' ',
+    '00':   ''
+  };
+
+  const parseString = function(inputStr, step) {
+    let result = [];
+    let index = 0
+    while (index < inputStr.length) {
+      result.push(inputStr.slice(index, index += step));
+    }
+    return result;
+  }
+  
+  const morseCode = parseString(expr, WORD_LENGTH). 
+    map(
+      function(item) {
+        return parseString(item, MORSE_LENGTH). 
+          map(
+            function(item) {
+              return MORSE[item];
+            }
+          ).join('');
+      }
+    );
+
+  return morseCode. 
+    map( 
+      function(item) {
+        if (item === '     ') return ' '; 
+        return MORSE_TABLE[item];
+      }
+    ).join('');
 }
 
 module.exports = {
